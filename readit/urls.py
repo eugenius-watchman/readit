@@ -17,15 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from books.views import (AuthorDetail, AuthorList, BookDetail, list_books, 
+from books.views import (AuthorDetail, AuthorList, BookDetail, CreateAuthor, list_books, 
 							ReviewList ,review_book) 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', list_books, name='books'),
     path('authors', AuthorList.as_view(), name='authors'),
-    path('books/(?P<pk>[-\w]+)/', BookDetail.as_view(), name='book-detail'),
-    path('authors/(?P<pk>[-\w]+)/', AuthorDetail.as_view(), name='author-detail'),
+    path('books/(P<pk>[-\w]+)/', BookDetail.as_view(), name='book-detail'),
+    path('authors/add/', CreateAuthor.as_view(), name='add-author'),
+    path('authors/(P<pk>[-\w]+)/', AuthorDetail.as_view(), name='author-detail'),
     path('review/', ReviewList.as_view(), name='review-books'),
-    path('review/(?P<pk>[-\w]+)/', review_book, name='review-book'),
+    path('review/(P<pk>[-\w]+)/', review_book, name='review-book'),
 ]
