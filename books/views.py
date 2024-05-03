@@ -89,6 +89,7 @@ def review_book(request, pk):
 		if form.is_valid():
 				book.is_favourite = form.cleaned_data['is_favourite']
 				book.review = form.cleaned_data['review']
+				book,review_by = request.user
 				book.save()
 		    
 				return redirect('review-books')
