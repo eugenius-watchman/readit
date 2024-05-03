@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from books.views import (AuthorDetail, AuthorList, BookDetail, CreateAuthor, list_books, 
-							ReviewList ,review_book) 
+																	ReviewList ,review_book) 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
