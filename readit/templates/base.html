@@ -36,10 +36,6 @@
 				{% if request.user.is_authenticated %}
 					<a href="{% url 'review-books' %}">Reviews</a>
 				{% endif %}
-				
-
-				
-
 			</nav>
 			<main>
 				{% block content %}{% endblock %}
