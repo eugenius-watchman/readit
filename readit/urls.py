@@ -16,17 +16,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth import views as auth_views
 from books.views import (AuthorDetail, AuthorList, BookDetail, CreateAuthor, list_books, 
 																	ReviewList ,review_book) 
 
 urlpatterns = [
+	# Auth
+	# path('logout/', auth_views.logout, name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='books'), name='logout'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    
+    # Admin
     path('admin/', admin.site.urls),
+    
+    # Custom
     path('', list_books, name='books'),
     path('authors', AuthorList.as_view(), name='authors'),
     path('books/(P<pk>[-\w]+)/', BookDetail.as_view(), name='book-detail'),
-    path('authors/add/', CreateAuthor.as_view(), name='add-author'),
+    path('authors/add/', login_required(CreateAuthor.as_view()), name='add-author'),
     path('authors/(P<pk>[-\w]+)/', AuthorDetail.as_view(), name='author-detail'),
-    path('review/', ReviewList.as_view(), name='review-books'),
+    path('review/', login_required(ReviewList.as_view()), name='review-books'),
     path('review/(P<pk>[-\w]+)/', review_book, name='review-book'),
 ]

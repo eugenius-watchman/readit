@@ -1,6 +1,9 @@
 # from django.http import HttpResponse
 from django.urls import reverse
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+# from django.contrib.auth import views as auth_views
+# from django.contrib.auth.views import LogoutView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, View
 from django.views.generic.edit import CreateView
@@ -75,7 +78,9 @@ class ReviewList(View):
 		}
 		
 		return render(request, "list-to-review.html", context)
-	
+		
+
+@login_required	
 def review_book(request, pk):
 	"""
 	Review an individual book

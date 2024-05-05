@@ -1,5 +1,5 @@
 {% load static %}
-<!Doctype html>
+<!doctype html>
 <html>
 	<head>
 		<title>ReadIt!</title>
@@ -18,9 +18,14 @@
 				<img src="{% static 'img/logo.png' %}" alt="ReadIt!" class="logo"/>
 				<div class="welcome">
 					{% if request.user.is_authenticated %}
-					<p>Hello {{ request.user.username|title }}, you last logged in at {{ request.user.last_login|date:"D d M Y" }}</p>
+					<p>Hello {{ request.user.username|title }}, you last logged in at {{ request.user.last_login|date:"D d M Y" }}. 
+						<form action="{% url 'logout' %}" method="post">
+							{% csrf_token %}
+							<button type="submit" style="background-color:#9fe2bf; border-color:white; border-style:solid;" >Logout</button>
+						</form>
+					</p>
 					{% else %}
-						<p>Welcome guest!</p>
+						<p>Welcome guest!  <a href="{% url 'login' %}">Login</a></p>
 					{% endif %}
 			 
 				</div>
@@ -28,10 +33,17 @@
 			<nav>
 				<a href="{% url 'books' %}">Books</a>
 				<a href="{% url 'authors' %}">Authors</a>
+				{% if request.user.is_authenticated %}
+					<a href="{% url 'review-books' %}">Reviews</a>
+				{% endif %}
+				
+
+				
+
 			</nav>
 			<main>
 				{% block content %}{% endblock %}
-				
+					
 			</main>
 			<footer>
 				<p>Book review website! Binary Software Studios 2024 ©</p>
